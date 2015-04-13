@@ -66,11 +66,17 @@ function f.drawLoop()
       f.draw.setTBGColor(term, colors.white, colors.black)
       term.clear()
     end
-    if v.state == 1 then -- Main Selection (DL|RUN)
+    if v.state == 1 or v.state == 2 then -- Main Selection
       f.draw.title(term, w, h)
       f.draw.titleSelection(term, w, h)
       f.draw.fieldSizeAndWidth(term, w, h)
-    elseif v.state == 2 then -- Branch Selection
+      if v.state == 2 then
+        term.setCursorPos(w, h-1)
+        term.setCursorBlink(true)
+      else
+        
+      end 
+    elseif v.state == 3 then -- ingame
       if v.draw.fieldMoved or v.draw.redraw then
         f.draw.field(term, w, h, field)
       end
@@ -87,7 +93,7 @@ end
 function f.draw.footer(term, w, h)
   -- [FHxFW MI     TIMEs]
   f.draw.setBGColor(term, colors.black)
-  term.setcursorPos(1, h)
+  term.setCursorPos(1, h)
   f.draw.setTextColor(term, colors.green)
   term.write(tostring(v.field.width))
   f.draw.setTextColor(term, colors.white)
@@ -105,18 +111,41 @@ end
 
 function f.draw.titleSelection(term, w, h)
   for k, val in ipairs(v.titleSelection) do
-    term.setCursorPos((w/2)-(#val.name/2), (h/2)-(#v.titleSelection/2)+k)
+    term.setCursorPos((w/2)-((#val.name+2)/2), (h/2)-(#v.titleSelection/2)+k)
     if k == v.sel.title then
       f.draw.setTBGColor(term, colors.black, colors.lightGray, colors.white)
     else
       f.draw.setTBGColor(term, colors.white, colors.black)  
     end
-    term.write(val.name)
+    term.write(" " .. val.name .. " ")
   end
 end
 
 function f.draw.fieldSizeAndWidth(term, w, h)
-
+  term.setCursorPos(w/2-7, h-1)
+  f.draw.setTBGColor(term, colors.white, colors.black)
+  term.write("  x       Mines")
+  
+  term.setCursorPos(w/2-7, h-1)
+  f.draw.setTBGColor(term, colors.orange, colors.black, colors.white)
+  if v.field.width < 10 then
+    term.write("0")
+  end
+  term.write(tostring(v.field.width))
+  
+  term.setCursorPos(w/2-4, h-1)
+  if v.field.height < 10 then
+    term.write("0")
+  end
+  term.write(tostring(v.field.height))
+  
+  term.setCursorPos(w/2-1, h-1)
+  if v.field.mines < 100 then
+    term.write("0")
+  elseif v.field.mines < 10 then
+    term.write("00")
+  end
+  term.write(tostring(v.field.mines))
 end
 
 function f.draw.setTextColor(term, adv, mono)
@@ -146,6 +175,16 @@ function f.getFromFieldPos(x, y, field)
   return field[x*y]
 end
 
+function f.doSelection(sel, tsel, field)
+  if tsel[sel]["function"] == "exit" then
+    running = false
+  elseif tsel[sel]["function"] == "custom" then
+     
+  else
+    v.state = 3
+  end
+end
+
 function f.inputLoop()
   while running do
     local ev, p1, p2, p3, p4, p5 = os.pullEventRaw()
@@ -154,10 +193,23 @@ function f.inputLoop()
     elseif ev == "term.resize" then
       w, h = term.getSize()
     elseif ev == "key" then
-      if p1 == 200 then -- Up Arrow
-        v.sel.title = ((v.sel.title - 2) % #v.titleSelection) + 1
-      elseif p1 == 208 then -- Down Arrow
-        v.sel.title = (v.sel.title % #v.titleSelection) + 1
+      if v.state == 1 then -- Main menu
+        if p1 == 200 then -- Up Arrow
+          v.sel.title = ((v.sel.title - 2) % #v.titleSelection) + 1
+        elseif p1 == 208 then -- Down Arrow
+          v.sel.title = (v.sel.title % #v.titleSelection) + 1
+        elseif p1 == 28 then -- Enter
+          f.doSelection(v.sel.title, v.titleSelection, v.field)
+        end
+        if not v.titleSelection[v.sel.title]["function"] then
+          v.field.width = v.titleSelection[v.sel.title]["width"]
+          v.field.height = v.titleSelection[v.sel.title]["height"]
+          v.field.mines = v.titleSelection[v.sel.title]["mines"]
+        end
+      elseif v.mode == 2 then -- Custom selection
+        
+      elseif v.mode == 3 then -- Ingame
+      
       end
     end
   end
