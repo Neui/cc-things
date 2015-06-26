@@ -14,5 +14,5 @@
 <!-- Snippets -->
 
 <!-- Other things -->
-[MC Web]: minecraft.net
-[CC Web]: computercraft.info
+[MC Web]: http://minecraft.net
+[CC Web]: http://computercraft.info

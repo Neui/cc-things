@@ -18,8 +18,8 @@ This is a shell based on the bash shell.
 
 <!---- LINK LIST ---->
 <!-- Programs -->
-[pb mineccweeper]: pastebin.com
-[pb ccbash]: pastebin.com
+[pb mineccweeper]: http://pastebin.com
+[pb ccbash]: http://pastebin.com
 <!-- Other things -->
-[MC Web]: minecraft.net
-[CC Web]: computercraft.info
+[MC Web]: http://minecraft.net
+[CC Web]: http://computercraft.info
