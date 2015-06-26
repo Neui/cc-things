@@ -1,6 +1,6 @@
 <!-- Written in Markdown, use it to view it! -->
 
- Programs and Snippets for [Minecraft][MC Web] modification [computercraft][CC Web]
+ Programs and Snippets <sub><sup>for [Minecraft][MC Web] modification [computercraft][CC Web]</sup></sub>
 ====================================================================================
 ###### For Snippets, see the README.md in the folder `snippets`
 

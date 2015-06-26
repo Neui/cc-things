@@ -1,6 +1,6 @@
 <!-- Written in Markdown, use it to view it! -->
 
- Snippets for [Minecraft][MC Web] modification [computercraft][CC Web]
+ Snippets <sub><sup>for [Minecraft][MC Web] modification [computercraft][CC Web]</sup></sub>
 =======================================================================
 
 
