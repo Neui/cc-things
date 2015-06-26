@@ -1,6 +1,25 @@
-# Programs for [Minecraft](minecraft.net) modification [computercraft](computercraft.info)
+<!-- Written in Markdown, use it to view it! -->
 
-## minccweeper
-`pastebin get`[`<todo>`](pastebin.com)`minccweeper`
-### Description
+ Programs and Snippets for [Minecraft][MC Web] modification [computercraft][CC Web]
+====================================================================================
+###### For Snippets, see the README.md in the folder `snippets`
+
+Some programs might be uploaded to pastebin to download it directly to computercraft
+very easily.
+Just write `pastebin get <id> <name>` where `<id>` is the ID on pastebin <sub><sup>(it says next to the title, if it is `<todo>` then it hasn't uploaded yet)</sup></sub> and `<name>` is a filename you wish to save in.
+
+ minccweeper [`<todo>`][pb mineccweeper]
+-------------
 This is a game based on minesweeper.
+
+ ccbash [`<todo>`][pb ccbash]
+--------
+This is a shell based on the bash shell.
+
+<!---- LINK LIST ---->
+<!-- Programs -->
+[pb mineccweeper]: pastebin.com
+[pb ccbash]: pastebin.com
+<!-- Other things -->
+[MC Web]: minecraft.net
+[CC Web]: computercraft.info
