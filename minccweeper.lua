@@ -1,6 +1,6 @@
 --[[
   +---=== minccweeper ===---+
-  | This is a 'receation'   |
+  | This is a 'recreation'  |
   | of minesweeper for the  |
   | Minecraft modification  |
   | computercraft.          |
@@ -17,14 +17,9 @@ f.draw = {} -- Drawing functions
 
 local v = {} -- Variables
 v.state = 1 -- State 0 = startup, 1 = Main menu, 2 = Ingame
-v.sel = {}
-v.sel.title = 1
-v.sel.customField = 0
+v.sel = { ["title"] = 1; ["customField"] = 0; }
 v.titleSelection = {}
-v.field = {}
-v.field.width = 9
-v.field.height = 9
-v.field.mines = 10
+v.field = { ["width"] = 9; ["height"] = 9; ["mines"] = 10; }
 v.time = 0
 v.draw = {}
 v.draw.fieldMoved = true
@@ -33,11 +28,7 @@ v.draw.redraw = true
 local c = {} -- constants
 c.name = "minCCweeper"
 c.title = "~[ " .. c.name .. " ]~"
-c.field = {}
-c.field.maxwidth = 30  -- Taken from windows minesweeper lol
-c.field.maxheight = 24
-c.field.minmines = 10
-c.field.maxmines = 668
+c.field = { ["maxwidth"] = 30; ["maxheight"] = 24; ["minmines"] = 10; ["maxmines"] = 668; }
 c.field.draw = {}
 c.field.draw.unknown = { ["char"] = '#'; ["fgmono"] = colors.white; ["bgadv"] = colors.gray; ["bgmono"] = colors.black; }
 c.field.draw.nothing = { ["char"] = ' '; }
@@ -75,7 +66,7 @@ function f.drawLoop()
         term.setCursorBlink(true)
       else
         
-      end 
+      end
     elseif v.state == 3 then -- ingame
       if v.draw.fieldMoved or v.draw.redraw then
         f.draw.field(term, w, h, field)
@@ -97,7 +88,7 @@ function f.draw.footer(term, w, h)
   f.draw.setTextColor(term, colors.green)
   term.write(tostring(v.field.width))
   f.draw.setTextColor(term, colors.white)
-  term.write("x")  
+  term.write("x")
   f.draw.setTextColor(term, colors.green)
   term.write(tostring(v.field.height))
   f.draw.setTextColor(term, colors.brown)
@@ -115,7 +106,7 @@ function f.draw.titleSelection(term, w, h)
     if k == v.sel.title then
       f.draw.setTBGColor(term, colors.black, colors.lightGray, colors.white)
     else
-      f.draw.setTBGColor(term, colors.white, colors.black)  
+      f.draw.setTBGColor(term, colors.white, colors.black)
     end
     term.write(" " .. val.name .. " ")
   end
@@ -210,6 +201,30 @@ function f.inputLoop()
         
       elseif v.mode == 3 then -- Ingame
       
+      end
+    elseif ev == "mouse_click" or ev == "mouse_drag" then
+      if v.state == 1 then -- Main menu
+        for k = 1, #v.titleSelection do
+          local hpos = math.floor((h/2)-(#v.titleSelection/2)+k)
+          if hpos == p3 then
+            if p1 == 1 and ev == "mouse_click" then
+              v.sel.title = k
+              os.queueEvent("key", 28) -- Enter, i am too lazy
+            else
+              if v.sel.title == k and ev == "mouse_click" then
+                os.queueEvent("key", 28) -- Enter
+              else
+                v.sel.title = k
+              end
+            end
+            
+            break
+          end
+        end
+      elseif v.mode == 2 then -- Custom selection
+        
+      elseif v.mode == 3 then -- Ingame
+        
       end
     end
   end
