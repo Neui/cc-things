@@ -8,7 +8,7 @@ Some programs might be uploaded to pastebin to download it directly to computerc
 very easily.
 Just write `pastebin get <id> <name>` where `<id>` is the ID on pastebin <sub><sup>(it says next to the title, if it is `<todo>` then it hasn't uploaded yet)</sup></sub> and `<name>` is a filename you wish to save in.
 
- minccweeper [`<todo>`][pb mineccweeper]
+ minccweeper [`aY3iP8SF`][pb mineccweeper]
 -------------
 This is a game based on minesweeper.
 
@@ -18,7 +18,7 @@ This is a shell based on the bash shell.
 
 <!---- LINK LIST ---->
 <!-- Programs -->
-[pb mineccweeper]: http://pastebin.com
+[pb mineccweeper]: http://pastebin.com/aY3iP8SF
 [pb ccbash]: http://pastebin.com
 <!-- Other things -->
 [MC Web]: http://minecraft.net
