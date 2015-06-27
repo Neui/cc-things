@@ -23,8 +23,8 @@
 ]]
 local function draw_history_graph(history_table, max_value, zero_point, width, height, from_beginning, draw_method, type_checking)
   -- Put some brackets here to completly disable type checking
-  assert(type(history_table) ~= "table", "Expected table for history_table, got " .. type(history_table))
-  assert(type(max_value) ~= "number", "Expected number for max_value, got " .. type(max_value))
+  assert(type(history_table) == "table", "Expected table for history_table, got " .. type(history_table))
+  assert(type(max_value) == "number", "Expected number for max_value, got " .. type(max_value))
   local width = tonumber(width) or (term.getSize and (term.getSize())[1])
   local height = tonumber(height) or (term.getSize and (term.getSize())[2])
   local zero_point = tonumber(zero_point) or 0
@@ -49,12 +49,12 @@ local function draw_history_graph(history_table, max_value, zero_point, width, h
     end
   end
   
-  local _start, _end = 1, math.min(#history_table, width)
+  local _start, _end, step = 1, math.min(#history_table, width), 1
   if from_beginning then
-    _start, _end = #history_table, math.max(#history_table - width, 0)
+    _start, _end, step = #history_table, math.max(#history_table - width, 1), -1
   end
   
-  for i = _start, _end, 1 do
+  for i = _start, _end, step do
     if history_table[i] <= max_value then
       local ypos = history_table[i] / max_value * height
       
@@ -93,23 +93,23 @@ end
 ]]
 local function draw_history_graph_simple(history_table, max_value, width, height, from_beginning)
   -- Put some brackets here to completly disable type checking
-  assert(type(history_table) ~= "table", "Expected table for history_table, got " .. type(history_table))
-  assert(type(max_value) ~= "number", "Expected number for max_value, got " .. type(max_value))
+  assert(type(history_table) == "table", "Expected table for history_table, got " .. type(history_table))
+  assert(type(max_value) == "number", "Expected number for max_value, got " .. type(max_value))
   local width = tonumber(width) or (term.getSize and (term.getSize())[1])
   local height = tonumber(height) or (term.getSize and (term.getSize())[2])
   local zero_point = tonumber(zero_point) or 0
   local _draw_table = {}
   
-  local _start, _end = 1, math.min(#history_table, width)
+  local _start, _end, step = 1, math.min(#history_table, width), 1
   if from_beginning then
-    _start, _end = #history_table, math.max(#history_table - width, 0)
+    _start, _end, step = #history_table, math.max(#history_table - width, 1), -1
   end
   
-  for i = _start, _end, 1 do
+  for i = _start, _end, step do
     if history_table[i] <= max_value then
       local ypos = history_table[i] / max_value * height
-      _draw_table[#draw_table + 1] = { i, ypos }
+      _draw_table[#_draw_table + 1] = { i, height - ypos }
     end
   end
-  
+  return _draw_table
 end
