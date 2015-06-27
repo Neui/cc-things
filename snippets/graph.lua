@@ -49,12 +49,12 @@ local function draw_history_graph(history_table, max_value, zero_point, width, h
     end
   end
   
-  local _start, _end, step = 1, math.min(#history_table, width), 1
+  local _start, _end, _step = 1, math.min(#history_table, width), 1
   if from_beginning then
-    _start, _end, step = #history_table, math.max(#history_table - width, 1), -1
+    _start, _end, _step = #history_table, math.max(#history_table - width, 1), -1
   end
   
-  for i = _start, _end, step do
+  for i = _start, _end, _step do
     if history_table[i] <= max_value then
       local ypos = history_table[i] / max_value * height
       
@@ -100,12 +100,12 @@ local function draw_history_graph_simple(history_table, max_value, width, height
   local zero_point = tonumber(zero_point) or 0
   local _draw_table = {}
   
-  local _start, _end, step = 1, math.min(#history_table, width), 1
+  local _start, _end, _step = 1, math.min(#history_table, width), 1
   if from_beginning then
-    _start, _end, step = #history_table, math.max(#history_table - width, 1), -1
+    _start, _end, _step = #history_table, math.max(#history_table - width, 1), -1
   end
   
-  for i = _start, _end, step do
+  for i = _start, _end, _step do
     if history_table[i] <= max_value then
       local ypos = history_table[i] / max_value * height
       _draw_table[#_draw_table + 1] = { i, height - ypos }
