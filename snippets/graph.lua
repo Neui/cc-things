@@ -14,6 +14,7 @@
                           - a 1 for outputting a table in the format as {"-\ /-","  -  "}
                           - a 0 for outputting a table in the format as {{x, y, char},...}
   type_checking  - If true then it disables some type checking
+  allow_oob      - Also give out Out Of Bounds Values (unter 0 or over max_value)
   
   History Table (Data) structure:
   [1] = value
@@ -21,7 +22,7 @@
   [3] = value
    ... And so on
 ]]
-local function draw_history_graph(history_table, max_value, zero_point, width, height, from_beginning, draw_method, type_checking)
+local function draw_history_graph(history_table, max_value, zero_point, width, height, from_beginning, draw_method, type_checking, allow_oob)
   -- Put some brackets here to completly disable type checking
   assert(type(history_table) == "table", "Expected table for history_table, got " .. type(history_table))
   assert(type(max_value) == "number", "Expected number for max_value, got " .. type(max_value))
@@ -44,7 +45,7 @@ local function draw_history_graph(history_table, max_value, zero_point, width, h
       end
     else -- draw_method is 1
       local function draw_method(x, y, char)
-        _draw_table[#draw_table + 1] = { x, y, char }
+        _draw_table[#_draw_table + 1] = { x, y, char }
       end
     end
   end
@@ -76,11 +77,12 @@ end
    and less features
   
   Arguments:
-  history_table - Array with all the data
-  max_value     - The max value it can be; if a value is over it, then it will not draw it
-  width         - Width of the visible graph
-  height        - Height of the visible graph
+  history_table  - Array with all the data
+  max_value      - The max value it can be; if a value is over it, then it will not draw it
+  width          - Width of the visible graph
+  height         - Height of the visible graph
   from_beginning - If false, it starts reading from the end else from the beginning
+  allow_oob      - Also give out Out Of Bounds Values (unter 0 or over max_value)
   
   It gives you a table with all the points and coordinates:
   {{x, y}, {x, y}}
@@ -91,7 +93,7 @@ end
   [3] = value
    ... And so on
 ]]
-local function draw_history_graph_simple(history_table, max_value, width, height, from_beginning)
+local function draw_history_graph_simple(history_table, max_value, width, height, from_beginning, allow_oob)
   -- Put some brackets here to completly disable type checking
   assert(type(history_table) == "table", "Expected table for history_table, got " .. type(history_table))
   assert(type(max_value) == "number", "Expected number for max_value, got " .. type(max_value))
@@ -106,9 +108,11 @@ local function draw_history_graph_simple(history_table, max_value, width, height
   end
   
   for i = _start, _end, _step do
-    if history_table[i] <= max_value then
+    local _htab_val = history_table[i]
+    local _in_bounds = (_htab_val <= max_value and _htab_val >= 0)
+    if _in_bounds or allow_oob then
       local ypos = history_table[i] / max_value * height
-      _draw_table[#_draw_table + 1] = { i, height - ypos }
+      _draw_table[#_draw_table + 1] = { i, height - ypos, _in_bounds }
     end
   end
   return _draw_table
