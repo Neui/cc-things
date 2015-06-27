@@ -4,9 +4,9 @@
 =======================================================================
 
 
-|    File   |                   Description              |     pastebin   |
-|----------:|:------------------------------------------:|:---------------|
-| graph.lua | Generates a graph from a table and history | [ TODO ][none] |
+|    File   |                   Description              |     pastebin   | WIP? |
+|----------:|:------------------------------------------:|:---------------|:----:|
+| graph.lua | Generates a graph from a table and history | [ TODO ][none] | Yes  |
 
 
 <!---- LINK LIST ---->
