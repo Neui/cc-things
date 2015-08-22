@@ -16,10 +16,18 @@ This is a game based on minesweeper.
 --------
 This is a shell based on the bash shell.
 
+ labyrinth [`MJS1fywR`][pb labyrinth]<sub>(WIP)</sub>
+-----------
+This is based of [illacceptanything/illacceptanything/labyrinth](https://github.com/illacceptanything/illacceptanything/tree/master/labyrinth). This is a labyrinth made in a filesystem/git/github repo.
+This program should let you "explore" it inside of ComputerCraft.
+It includes the labyrinth from github in the program, but there will be a way to use the files so multiple can be used easily.
+
+
 <!---- LINK LIST ---->
 <!-- Programs -->
 [pb mineccweeper]: http://pastebin.com/aY3iP8SF
 [pb ccbash]: http://pastebin.com
+[pb labyrinth]: http://pastebin.com/MJS1fywR
 <!-- Other things -->
 [MC Web]: http://minecraft.net
 [CC Web]: http://computercraft.info
