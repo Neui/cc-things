@@ -562,6 +562,13 @@ function draw_it()
   
   local draw_options = {}
   local sel_line, sel_size = 1, 1
+  local x, y = term.getCursorPos()
+  local skip = 0
+  if #all_options > (h - y) then
+    if selection > ((h - y) / 2) then
+      skip = math.min(selection - ((h - y) / 2), #all_options - (h - y) - 1)
+    end
+  end
   
   local curr_line = ""
   for k, v in ipairs(all_options) do
@@ -604,18 +611,22 @@ function draw_it()
   end
   
   for k, v in ipairs(draw_options) do
-    local x, y = term.getCursorPos()
-    if v:sub(1,1) == ">" then
-      term.setTextColor(colors.black)
-      term.setBackgroundColor(colors.white)
-    elseif v:sub(1,1) == "-" then
-      term.setTextColor(colors.white)
-      term.setBackgroundColor(colors.black)
+    if skip == 0 then
+      local x, y = term.getCursorPos()
+      if v:sub(1,1) == ">" then
+        term.setTextColor(colors.black)
+        term.setBackgroundColor(colors.white)
+      elseif v:sub(1,1) == "-" then
+        term.setTextColor(colors.white)
+        term.setBackgroundColor(colors.black)
+      end
+      term.write(v)
+      -- Go all the way to the end of the line
+      term.write(string.rep(" ", w - #v))
+      term.setCursorPos(1, y + 1)
+    else
+      skip = skip - 1
     end
-    term.write(v)
-    -- Go all the way to the end of the line
-    term.write(string.rep(" ", w - #v))
-    term.setCursorPos(1, y + 1)
   end
 end
 
@@ -665,7 +676,7 @@ elseif arg[1] == "default" then
   laby = default_labyrinth
   running = true
 else
-  -- TODO
+  -- TODO: Implement a reader and just do it.
   print("TODO - Nothing here yet")
 end
 
